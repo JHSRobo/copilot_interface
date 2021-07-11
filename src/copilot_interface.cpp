@@ -12,7 +12,7 @@ void callback(copilot_interface::copilotControlParamsConfig &config, uint32_t le
     ROS_INFO("Reconfigure Request: %f %f %f %s",
              config.l_scale, config.a_scale,
              config.v_scale,
-             config.thrustersEnabled?"True":"False");
+             config.thrusters?"True":"False");
 }
 
 int main(int argc, char **argv) {
@@ -30,5 +30,3 @@ int main(int argc, char **argv) {
     ros::spin();
     return 0;
 }
-
-
