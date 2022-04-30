@@ -7,18 +7,21 @@ from copilot_interface.cfg import opsInterfaceConfig
 
 lengthProgram = False
 
+#def opsCallback
+    
+
 def main():
     rospy.init_node('opsInterface')
   
-    pubLength = rospy.Publisher('ops/measure_toggle', Bool, queue_size=10)
+    pubLength = rospy.Publisher('ops/measure_toggle', Bool, queue_size=1)
     
     def opsCallback(config, level):
       global lengthProgram
 
       lengthProgram = config.lengthFinder
-      pub_length.publish(lengsdwasd
+      pubLength.publish(lengthProgram)
       
-      dw
+      
 
     # setup dynamic reconfigure
     server = Server(opsInterfaceConfig, opsCallback)
