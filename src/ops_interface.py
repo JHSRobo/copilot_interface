@@ -4,12 +4,9 @@ from std_msgs.msg import String
 from std_msgs.msg import Bool
 
 from dynamic_reconfigure.server import Server
-from copilot_interface.cfg import opsInterface.cfg
+from copilot_interface.cfg import opsInterfaceConfig
 
 lengthProgram = False
-
-#def opsCallback
-    
 
 def main():
     global pubLength
