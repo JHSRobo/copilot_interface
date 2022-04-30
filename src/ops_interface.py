@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
+from std_msgs.msg import Bool
 
 from dynamic_reconfigure.server import Server
-from copilot_interface.cfg import opsInterfaceConfig
+from copilot_interface.cfg import opsInterface.cfg
 
 lengthProgram = False
 
