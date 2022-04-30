@@ -11,6 +11,7 @@ lengthProgram = False
     
 
 def main():
+    global pubLength
     rospy.init_node('opsInterface')
   
     pubLength = rospy.Publisher('ops/measure_toggle', Bool, queue_size=1)
