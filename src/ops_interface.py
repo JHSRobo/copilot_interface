@@ -6,24 +6,30 @@ from std_msgs.msg import Bool
 from dynamic_reconfigure.server import Server
 from copilot_interface.cfg import opsControlParamsConfig
 
-lengthProgram = False
 toggleLasers = False
+lengthProgram = False
+photomosaicProgram = False
 
 def main():
-    global pubLength, pubLasers
+    global pubLength, pubLasers, pubPhotomosaic
     rospy.init_node('ops_interface')
-  
-    pubLength = rospy.Publisher('ops/measure_toggle', Bool, queue_size=1)
+    
     pubLasers = rospy.Publisher('ops/toggle_lasers', Bool, queue_size=1)
+    pubLength = rospy.Publisher('ops/measure_toggle', Bool, queue_size=1)
+    pubPhotomosaic = rospy.Publisher('ops/photomosaic_toggle', Bool, queue_size=1)
     
     def opsCallback(config, level):
-      global lengthProgram, toggleLasers
-
-      lengthProgram = config.length_finder
-      toggleLasers = config.toggle_lasers
+      global lengthProgram, toggleLasers, photomosaicProgram
       
-      pubLength.publish(lengthProgram)
+      toggleLasers = config.toggle_lasers
+      lengthProgram = config.length_finder
+      photomosaicProgram = config.photomosaic
+      
+      
       pubLasers.publish(toggleLasers)
+      pubLength.publish(lengthProgram)
+      pubPhotomosaic.publish(photomosaicProgram)
+      
       
       return config
       
