@@ -24,7 +24,7 @@ def main():
       
 
     # setup dynamic reconfigure
-    server = Server(opsControlParams, opsCallback)
+    server = Server(opsControlParamsConfig, opsCallback)
     
     rospy.spin()
         
