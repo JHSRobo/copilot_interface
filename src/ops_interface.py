@@ -7,18 +7,23 @@ from dynamic_reconfigure.server import Server
 from copilot_interface.cfg import opsControlParamsConfig
 
 lengthProgram = False
+laserToggle = False
 
 def main():
-    global pubLength
+    global pubLength, pubLasers
     rospy.init_node('ops_interface')
   
     pubLength = rospy.Publisher('ops/measure_toggle', Bool, queue_size=1)
+    pubLasers = rospy.Publisher('ops/toggle_lasers', Bool, queue_size=1)
     
     def opsCallback(config, level):
-      global lengthProgram
+      global lengthProgram, toggleLasers
 
       lengthProgram = config.length_finder
+      laserToggle = config.lasers_toggle
+      
       pubLength.publish(lengthProgram)
+      pubLasers.publish(toggleLasers)
       
       return config
       
