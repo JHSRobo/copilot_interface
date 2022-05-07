@@ -17,6 +17,7 @@ def main():
     pubLasers = rospy.Publisher('ops/toggle_lasers', Bool, queue_size=1)
     pubLength = rospy.Publisher('ops/measure_toggle', Bool, queue_size=1)
     pubPhotomosaic = rospy.Publisher('ops/photomosaic_toggle', Bool, queue_size=1)
+    pubShipwreck = rospy.Publisher('ops/shipwreck_mapper', Bool, queue_size=1)
     
     def opsCallback(config, level):
       global lengthProgram, toggleLasers, photomosaicProgram, mapShipwreck
