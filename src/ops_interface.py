@@ -21,6 +21,7 @@ def main():
       lengthProgram = config.l_scale
       pubLength.publish(lengthProgram)
       
+      return config
       
 
     # setup dynamic reconfigure
