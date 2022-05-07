@@ -7,7 +7,7 @@ from dynamic_reconfigure.server import Server
 from copilot_interface.cfg import opsControlParamsConfig
 
 lengthProgram = False
-laserToggle = False
+toggleLasers = False
 
 def main():
     global pubLength, pubLasers
@@ -20,7 +20,7 @@ def main():
       global lengthProgram, toggleLasers
 
       lengthProgram = config.length_finder
-      laserToggle = config.lasers_toggle
+      toggleLasers = config.toggle_lasers
       
       pubLength.publish(lengthProgram)
       pubLasers.publish(toggleLasers)
