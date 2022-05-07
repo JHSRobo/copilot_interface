@@ -4,8 +4,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Bool
 
 from dynamic_reconfigure.server import Server
-from copilot_interface.cfg import copilotControlParamsConfig
-#from copilot_interface.cfg import opsInterfaceConfig
+from copilot_interface.cfg import opsControlParamsConfig
 
 lengthProgram = False
 
@@ -18,14 +17,14 @@ def main():
     def opsCallback(config, level):
       global lengthProgram
 
-      lengthProgram = config.l_scale
+      lengthProgram = config.length_finder
       pubLength.publish(lengthProgram)
       
       return config
       
 
     # setup dynamic reconfigure
-    server = Server(copilotControlParamsConfig, opsCallback)
+    server = Server(opsControlParams, opsCallback)
     
     rospy.spin()
         
