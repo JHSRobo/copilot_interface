@@ -22,7 +22,6 @@ def main():
       global lengthProgram, toggleLasers, photomosaicProgram
       
       toggleLasers = config.toggle_lasers
-      config.toggle_lasers = False
       lengthProgram = config.length_finder
       photomosaicProgram = config.photomosaic
       
@@ -31,7 +30,9 @@ def main():
       pubLength.publish(lengthProgram)
       pubPhotomosaic.publish(photomosaicProgram)
       
-      
+      config.length_finder = False
+      config.photomosaic = False
+    
       return config
       
 
