@@ -6,14 +6,73 @@ from std_msgs.msg import Bool
 from dynamic_reconfigure.server import Server
 from copilot_interface.cfg import opsControlParamsConfig
 
+import numpy as np
+from cv2 import cv2
+
 toggleLasers = False
 lengthProgram = False
 photomosaicProgram = False
 
+def lengthCallback():
+    class Mouse:
+        def __init__(self):
+            self.clicks = []
+            self.img = cv2.imread('Images/fish54cm.jpg', cv2.IMREAD_COLOR)
+            cv2.namedWindow('image')
+
+        def draw_circle(self, event,x,y,flags,param):
+            if event == cv2.EVENT_LBUTTONDOWN:
+                self.clicks.append((x, y))
+                print('x = %d, y = %d'%(x, y))
+                self.img = cv2.circle(self.img,(x,y),20,(0,255,0),-1)
+            
+
+    def fish(coords):
+        print(coords)
+        reference = abs(coords[0][0] - coords[1][0])
+        ratio = 5 / reference
+        total = ((((abs(coords[2][0] - coords[3][0]) ** 2) + (abs(coords[2][1] - coords[3][1])) ** 2)) ** 0.5) * ratio
+        print(f"Length of Fish: {total:.2f} centimeters")
+
+
+    def shipwreck(coords):
+        reference = abs(coords[0][0] - coords[1][0])
+        ratio = 15 / reference
+        total = ((((abs(coords[2][0] - coords[3][0]) ** 2) + (abs(coords[2][1] - coords[3][1])) ** 2)) ** 0.5) * ratio
+        print(f"Length of Shipwreck: {total:.2f} centimeters")
+
+    def lengthMain():
+        c = Mouse()
+        cv2.setMouseCallback('image',c.draw_circle)
+
+        selection = input("s = shipwreck | f = fish:\n")
+
+        status = True
+        while status:
+            cv2.imshow("image", c.img)
+            cv2.waitKey(1)
+            if len(c.clicks) == 4:
+                if selection == 's':
+                    shipwreck(c.clicks)
+                    status = False
+                elif selection == 'f':
+                    fish(c.clicks)
+                    status = False
+                else:
+                    print("Wrong input, try again.")
+    lengthMain()
+
 def main():
-    global pubLength, pubLasers, pubPhotomosaic, pubShipwreck
+    global pubLength, pubLasers, pubPhotomosaic, pubShipwreck, subLength, subLasers, subPhotomosaic, subShipwreck
     rospy.init_node('ops_interface')
     
+    # Subscribers
+    subLasers = rospy.Subscriber('ops/toggle_lasers', Bool, laserCallback)
+    subLength = rospy.Subscriber('ops/measure_toggle', Bool, lengthCallback)
+    subPhotomosaic = rospy.Subscriber('ops/photomosaic_toggle', Bool, photomosaicCallback)
+    subShipwreck = rospy.Subscriber('ops/shipwreck_mapper', Bool, shipwreckCallback)
+    
+    # Publishers
     pubLasers = rospy.Publisher('ops/toggle_lasers', Bool, queue_size=1)
     pubLength = rospy.Publisher('ops/measure_toggle', Bool, queue_size=1)
     pubPhotomosaic = rospy.Publisher('ops/photomosaic_toggle', Bool, queue_size=1)
