@@ -17,7 +17,7 @@ def lengthCallback():
     class Mouse:
         def __init__(self):
             self.clicks = []
-            self.img = cv2.imread('Images/fish54cm.jpg', cv2.IMREAD_COLOR)
+            self.img = cv2.imread('https://www.thesprucepets.com/thmb/wNqkG8YzvRd22RBSk6lu4h5QZVo=/941x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/low-maintenance-freshwater-fish-4770223-hero-ffb66c229c194e2db4916e88bbd17a15.jpg', cv2.IMREAD_COLOR)
             cv2.namedWindow('image')
 
         def draw_circle(self, event,x,y,flags,param):
@@ -67,10 +67,7 @@ def main():
     rospy.init_node('ops_interface')
     
     # Subscribers
-    subLasers = rospy.Subscriber('ops/toggle_lasers', Bool, laserCallback)
     subLength = rospy.Subscriber('ops/measure_toggle', Bool, lengthCallback)
-    subPhotomosaic = rospy.Subscriber('ops/photomosaic_toggle', Bool, photomosaicCallback)
-    subShipwreck = rospy.Subscriber('ops/shipwreck_mapper', Bool, shipwreckCallback)
     
     # Publishers
     pubLasers = rospy.Publisher('ops/toggle_lasers', Bool, queue_size=1)
