@@ -32,14 +32,14 @@ def lengthCallback():
         reference = abs(coords[0][0] - coords[1][0])
         ratio = 5 / reference
         total = ((((abs(coords[2][0] - coords[3][0]) ** 2) + (abs(coords[2][1] - coords[3][1])) ** 2)) ** 0.5) * ratio
-        print(f"Length of Fish: {total:.2f} centimeters")
+        print("Length of Fish: {:.2f} centimeters".format(total))
 
 
     def shipwreck(coords):
         reference = abs(coords[0][0] - coords[1][0])
         ratio = 15 / reference
         total = ((((abs(coords[2][0] - coords[3][0]) ** 2) + (abs(coords[2][1] - coords[3][1])) ** 2)) ** 0.5) * ratio
-        print(f"Length of Shipwreck: {total:.2f} centimeters")
+        print(f"Length of Shipwreck: {:.2f} centimeters".format(total))
 
     def lengthMain():
         c = Mouse()
