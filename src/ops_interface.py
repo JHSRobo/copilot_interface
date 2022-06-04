@@ -54,7 +54,7 @@ def fishLengthCallback(msg, cb_args=0):
         cv2.imshow('displayImage', displayImg)
         cv2.waitKey(0)
 
-def shipwreckLengthCallback():
+def shipwreckLengthCallback(msg, cb_args=0):
     def draw_circle(img,event,x,y,flags,param):
         if event == cv2.EVENT_LBUTTONDOWN:
             clicks.append((x, y))
