@@ -13,8 +13,8 @@ toggleLasers = False
 fishLengthProgram = False
 shipwreckLengthProgram = False
 photomosaicProgram = False
-global old_msg = False
-global old_msg_2 = False
+old_msg = False
+old_msg_2 = False
 
 def fishLengthCallback(msg, cb_args=0):
     window_name = "image"
@@ -113,14 +113,14 @@ def shipwreckLengthCallback(msg, cb_args=0):
         cv2.waitKey(0)
 
 def enable_front_lasers(msg, cb_args=0):
-    global gpio_pub
+    global gpio_pub, old_msg
     if old_msg != msg.data:
         gpio_pub.publish(21)
         gpio_pub.publsih(20)
         old_msg = msg.data
 
 def enable_bottom_lasers(msg, cb_args=0):
-    global gpio_pub
+    global gpio_pub, old_msg_2
     if old_msg_2 != msg.data:
         gpio_pub.publish(26)
         gpio_pub.publish(6)
