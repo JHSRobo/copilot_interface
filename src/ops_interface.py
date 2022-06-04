@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, Int32
+
+import RPi.GPIO as GPIO
+import time
 
 from dynamic_reconfigure.server import Server
 from copilot_interface.cfg import opsControlParamsConfig
@@ -13,6 +16,9 @@ toggleLasers = False
 fishLengthProgram = False
 shipwreckLengthProgram = False
 photomosaicProgram = False
+old_msg = False
+
+GPIO.setmode(GPIO.BCM)
 
 def fishLengthCallback(msg, cb_args=0):
     window_name = "image"
@@ -110,6 +116,14 @@ def shipwreckLengthCallback(msg, cb_args=0):
         cv2.imshow('displayImage', displayImg)
         cv2.waitKey(0)
 
+def enable_lasers(msg, cb_args=0):
+    global gpio_pub
+    if old_msg != msg.data:
+        gpio_pub.publish(21)
+        gpio_pub.publsih(20)
+        old_msg = msg.data
+        
+        
 def main():
     global pubFishLength, pubShipwreckLength, pubLasers, pubPhotomosaic, pubShipwreck, subFishLength, subShipwreckLength, subLasers, subPhotomosaic, subShipwreck
     rospy.init_node('ops_interface')
@@ -117,6 +131,7 @@ def main():
     # Subscribers
     subFishLength = rospy.Subscriber('ops/fish_toggle', Bool, fishLengthCallback)
     subShipwreckLength = rospy.Subscriber('ops/shipwreck_toggle', Bool, shipwreckLengthCallback)
+    subLasers = rospy.Publisher('ops/toggle_lasers', Bool, enable_lasers)
     
     # Publishers
     pubLasers = rospy.Publisher('ops/toggle_lasers', Bool, queue_size=1)
@@ -124,6 +139,8 @@ def main():
     pubShipwreckLength = rospy.Publisher('ops/shipwreck_toggle', Bool, queue_size=1)
     pubPhotomosaic = rospy.Publisher('ops/photomosaic_toggle', Bool, queue_size=1)
     pubShipwreck = rospy.Publisher('ops/shipwreck_mapper', Bool, queue_size=1)
+    
+    gpio_pub = rospy.Publisher('rov/gpio_control', Int32, queue_size=1)
     
     def opsCallback(config, level):
       global fishLengthProgram, shipwreckLengthProgram, toggleLasers, photomosaicProgram, mapShipwreck
