@@ -15,19 +15,19 @@ shipwreckLengthProgram = False
 photomosaicProgram = False
 
 def fishLengthCallback(msg, cb_args=0):
-    def draw_circle(img,event,x,y,flags,param,msg,cb_args=0):
+    window_name = "image"
+    def draw_circle(event,x,y,flags,param,msg,cb_args=0):
         if event == cv2.EVENT_LBUTTONDOWN:
             clicks.append((x, y))
             img = cv2.circle(img,(x,y),20,(0,255,0),-1)
     
     clicks = []
-    vid_capture = cv2.VideoCapture("https://www.pexels.com/video/7222009/download/")
+    vid_capture = cv2.VideoCapture('https://www.pexels.com/video/7222009/download/')
     
-    cv2.setMouseCallback('image',draw_circle)
     count = 0
     
     while (vid_capture.isOpened()):
-        ret, frame = c.vid_capture.read()
+        ret, frame = vid_capture.read()
         cv2.imshow('video', frame)
         k = cv2.waitKey(1)
         
@@ -38,10 +38,17 @@ def fishLengthCallback(msg, cb_args=0):
                 break
         
     if count >= 1:
-        img = cv2.imread("home/jhsrobo/Pictures/fishLength.png", cv2.IMREAD_COLOR)
+        img = cv2.imread('home/jhsrobo/Pictures/fishLength.png', cv2.IMREAD_COLOR)
+        window_open = False
+        while not window_open:
+            cv2.namedWindow(window_name)
+            cv2.setMouseCallback(window_name, draw_circle)
+            window_open = True
+        except:
+            cv2.destroyAllWindows()
         status = True
         while status:
-            cv2.imshow("image", img)
+            cv2.imshow(window_name, img)
             cv2.waitKey(1)
             if len(clicks) == 4:
                 reference = abs(coords[0][0] - coords[1][0])
@@ -55,19 +62,19 @@ def fishLengthCallback(msg, cb_args=0):
         cv2.waitKey(0)
 
 def shipwreckLengthCallback(msg, cb_args=0):
-    def draw_circle(img,event,x,y,flags,param,msg,cb_args=0):
+    window_name = "image"
+    def draw_circle(event,x,y,flags,param,msg,cb_args=0):
         if event == cv2.EVENT_LBUTTONDOWN:
             clicks.append((x, y))
             img = cv2.circle(img,(x,y),20,(0,255,0),-1)
     
     clicks = []
-    vid_capture = cv2.VideoCapture("https://www.pexels.com/video/7222009/download/")
+    vid_capture = cv2.VideoCapture('https://www.pexels.com/video/7222009/download/')
     
-    cv2.setMouseCallback('image',draw_circle)
     count = 0
     
     while (vid_capture.isOpened()):
-        ret, frame = c.vid_capture.read()
+        ret, frame = vid_capture.read()
         cv2.imshow('video', frame)
         k = cv2.waitKey(1)
         
@@ -78,10 +85,17 @@ def shipwreckLengthCallback(msg, cb_args=0):
                 break
         
     if count >= 1:
-        img = cv2.imread("home/jhsrobo/Pictures/shipwreckLength.png", cv2.IMREAD_COLOR)
+        img = cv2.imread('home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)
+        window_open = False
+        while not window_open:
+            cv2.namedWindow(window_name)
+            cv2.setMouseCallback(window_name, draw_circle)
+            window_open = True
+        except:
+            cv2.destroyAllWindows()
         status = True
         while status:
-            cv2.imshow("image", img)
+            cv2.imshow(window_name, img)
             cv2.waitKey(1)
             if len(clicks) == 4:
                 reference = abs(coords[0][0] - coords[1][0])
