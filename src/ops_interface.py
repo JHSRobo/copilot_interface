@@ -13,7 +13,7 @@ toggleLasers = False
 lengthProgram = False
 photomosaicProgram = False
 
-def lengthCallback(msg, cb_args):
+def lengthCallback(msg, cb_args=0):
     class Mouse:
         def __init__(self):
             self.clicks = []
