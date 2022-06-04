@@ -41,11 +41,12 @@ def fishLengthCallback(msg, cb_args=0):
         img = cv2.imread('home/jhsrobo/Pictures/fishLength.png', cv2.IMREAD_COLOR)
         window_open = False
         while not window_open:
-            cv2.namedWindow(window_name)
-            cv2.setMouseCallback(window_name, draw_circle)
-            window_open = True
-        except:
-            cv2.destroyAllWindows()
+            try:
+                cv2.namedWindow(window_name)
+                cv2.setMouseCallback(window_name, draw_circle)
+                window_open = True
+            except:
+                cv2.destroyAllWindows()
         status = True
         while status:
             cv2.imshow(window_name, img)
@@ -88,11 +89,12 @@ def shipwreckLengthCallback(msg, cb_args=0):
         img = cv2.imread('home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)
         window_open = False
         while not window_open:
-            cv2.namedWindow(window_name)
-            cv2.setMouseCallback(window_name, draw_circle)
-            window_open = True
-        except:
-            cv2.destroyAllWindows()
+            try:
+                cv2.namedWindow(window_name)
+                cv2.setMouseCallback(window_name, draw_circle)
+                window_open = True
+            except:
+                cv2.destroyAllWindows()
         status = True
         while status:
             cv2.imshow(window_name, img)
