@@ -105,7 +105,7 @@ def main():
     # Publishers
     pubLasers = rospy.Publisher('ops/toggle_lasers', Bool, queue_size=1)
     pubFishLength = rospy.Publisher('ops/fish_toggle', Bool, queue_size=1)
-    pubShipwreckLength = rospy.Publisher('ops/shipwreck_toggle', Bool, shipwreckLengthCallback)
+    pubShipwreckLength = rospy.Publisher('ops/shipwreck_toggle', Bool, queue_size=1)
     pubPhotomosaic = rospy.Publisher('ops/photomosaic_toggle', Bool, queue_size=1)
     pubShipwreck = rospy.Publisher('ops/shipwreck_mapper', Bool, queue_size=1)
     
