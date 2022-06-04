@@ -127,7 +127,7 @@ def enable_bottom_lasers(msg, cb_args=0):
         old_msg_2 = msg.data
         
 def main():
-    global pubFishLength, pubShipwreckLength, pubFrontLasers, pubBottomLasers, pubPhotomosaic, pubShipwreck, subFishLength, subShipwreckLength, subFrontLasers, subBottomLasers, subPhotomosaic, subShipwreck
+    global pubFishLength, pubShipwreckLength, pubFrontLasers, pubBottomLasers, pubPhotomosaic, pubShipwreck, subFishLength, subShipwreckLength, subFrontLasers, subBottomLasers, subPhotomosaic, subShipwreck, gpio_pub
     rospy.init_node('ops_interface')
     
     # Subscribers
