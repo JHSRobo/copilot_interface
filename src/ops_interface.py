@@ -3,9 +3,6 @@ import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Bool, Int32
 
-import RPi.GPIO as GPIO
-import time
-
 from dynamic_reconfigure.server import Server
 from copilot_interface.cfg import opsControlParamsConfig
 
@@ -18,8 +15,6 @@ shipwreckLengthProgram = False
 photomosaicProgram = False
 old_msg = False
 old_msg_2 = False
-
-GPIO.setmode(GPIO.BCM)
 
 def fishLengthCallback(msg, cb_args=0):
     window_name = "image"
