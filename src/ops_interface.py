@@ -133,8 +133,8 @@ def main():
     # Subscribers
     subFishLength = rospy.Subscriber('ops/fish_toggle', Bool, fishLengthCallback)
     subShipwreckLength = rospy.Subscriber('ops/shipwreck_toggle', Bool, shipwreckLengthCallback)
-    subFrontLasers = rospy.Publisher('ops/toggle_front_lasers', Bool, enable_front_lasers)
-    subBottomLasers = rospy.Publisher('ops/toggle_bottom_lasers', Bool, enable_bottom_lasers)
+    subFrontLasers = rospy.Subscriber('ops/toggle_front_lasers', Bool, enable_front_lasers)
+    subBottomLasers = rospy.Subscriber('ops/toggle_bottom_lasers', Bool, enable_bottom_lasers)
     
     # Publishers
     pubFrontLasers = rospy.Publisher('ops/toggle_front_lasers', Bool, queue_size=1)
