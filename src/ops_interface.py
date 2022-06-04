@@ -10,13 +10,14 @@ from dynamic_reconfigure.server import Server
 from copilot_interface.cfg import opsControlParamsConfig
 
 import numpy as np
-from cv2 import cv2
+import cv2
 
 toggleLasers = False
 fishLengthProgram = False
 shipwreckLengthProgram = False
 photomosaicProgram = False
 old_msg = False
+old_msg_2 = False
 
 GPIO.setmode(GPIO.BCM)
 
@@ -116,13 +117,19 @@ def shipwreckLengthCallback(msg, cb_args=0):
         cv2.imshow('displayImage', displayImg)
         cv2.waitKey(0)
 
-def enable_lasers(msg, cb_args=0):
+def enable_front_lasers(msg, cb_args=0):
     global gpio_pub
     if old_msg != msg.data:
         gpio_pub.publish(21)
         gpio_pub.publsih(20)
         old_msg = msg.data
-        
+
+def enable_bottom_lasers(msg, cb_args=0):
+    global gpio_pub
+    if old_msg_2 != msg.data:
+        gpio_pub.publish(26)
+        gpio_pub.publish(6)
+        old_msg_2 = msg.data
         
 def main():
     global pubFishLength, pubShipwreckLength, pubLasers, pubPhotomosaic, pubShipwreck, subFishLength, subShipwreckLength, subLasers, subPhotomosaic, subShipwreck
@@ -131,10 +138,12 @@ def main():
     # Subscribers
     subFishLength = rospy.Subscriber('ops/fish_toggle', Bool, fishLengthCallback)
     subShipwreckLength = rospy.Subscriber('ops/shipwreck_toggle', Bool, shipwreckLengthCallback)
-    subLasers = rospy.Publisher('ops/toggle_lasers', Bool, enable_lasers)
+    subFrontLasers = rospy.Publisher('ops/toggle_front_lasers', Bool, enable_front_lasers)
+    subBottomLasers = rospy.Publisher('ops/toggle_bottom_lasers', Bool, enable_bottom_lasers)
     
     # Publishers
-    pubLasers = rospy.Publisher('ops/toggle_lasers', Bool, queue_size=1)
+    pubFrontLasers = rospy.Publisher('ops/toggle_front_lasers', Bool, queue_size=1)
+    pubBottomLasers = rospy.Publisher('ops/toggle_bottom_lasers', Bool, queue_size=1)
     pubFishLength = rospy.Publisher('ops/fish_toggle', Bool, queue_size=1)
     pubShipwreckLength = rospy.Publisher('ops/shipwreck_toggle', Bool, queue_size=1)
     pubPhotomosaic = rospy.Publisher('ops/photomosaic_toggle', Bool, queue_size=1)
