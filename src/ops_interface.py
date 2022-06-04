@@ -13,8 +13,8 @@ toggleLasers = False
 fishLengthProgram = False
 shipwreckLengthProgram = False
 photomosaicProgram = False
-old_msg = False
-old_msg_2 = False
+global old_msg = False
+global old_msg_2 = False
 
 def fishLengthCallback(msg, cb_args=0):
     window_name = "image"
