@@ -15,7 +15,7 @@ shipwreckLengthProgram = False
 photomosaicProgram = False
 
 def fishLengthCallback(msg, cb_args=0):
-    def draw_circle(img,event,x,y,flags,param):
+    def draw_circle(img,event,x,y,flags,param,msg,cb_args=0):
         if event == cv2.EVENT_LBUTTONDOWN:
             clicks.append((x, y))
             img = cv2.circle(img,(x,y),20,(0,255,0),-1)
@@ -55,7 +55,7 @@ def fishLengthCallback(msg, cb_args=0):
         cv2.waitKey(0)
 
 def shipwreckLengthCallback(msg, cb_args=0):
-    def draw_circle(img,event,x,y,flags,param):
+    def draw_circle(img,event,x,y,flags,param,msg,cb_args=0):
         if event == cv2.EVENT_LBUTTONDOWN:
             clicks.append((x, y))
             img = cv2.circle(img,(x,y),20,(0,255,0),-1)
