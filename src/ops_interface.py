@@ -18,7 +18,7 @@ old_msg_2 = False
 
 def fishLengthCallback(msg,cb_args=0):
     window_name = 'image'
-    def draw_circle(event,x,y,flags,param,msg,cb_args=0,img = cv2.imread('/home/jhsrobo/Pictures/fishLength.png', cv2.IMREAD_COLOR)):
+    def draw_circle(event,x,y,flags,param,cb_args=0,img=cv2.imread('/home/jhsrobo/Pictures/fishLength.png', cv2.IMREAD_COLOR)):
         window_name = 'image'
         if event == cv2.EVENT_LBUTTONDOWN:
             clicks.append((x, y))
@@ -27,7 +27,7 @@ def fishLengthCallback(msg,cb_args=0):
             cv2.imshow(window_name, img)
     
     clicks = []
-    vid_capture = cv2.VideoCapture('/home/jhsrobo/Videos/testingSample.MOV')
+    vid_capture = cv2.VideoCapture('/home/jhsrobo/Videos/testingSample3.mp4')
     
     count = 0
     
@@ -38,7 +38,7 @@ def fishLengthCallback(msg,cb_args=0):
         
         if count < 1:
             if k == ord('p'):
-                cv2.imwrite('/home/jhsrobo/Pictures/fishLength.png', frame) #home/jhsrobo/Pictures/fishLength.png
+                cv2.imwrite('/home/jhsrobo/Pictures/fishLength.png', frame)
                 count = count + 1
                 break
         
@@ -64,10 +64,14 @@ def fishLengthCallback(msg,cb_args=0):
                 status = False
         displayImg = np.zeros((512,1024,3), dtype=np.uint8)
         cv2.putText(displayImg, "{:.2f} cm".format(total), (50,325), cv2.FONT_HERSHEY_SIMPLEX, 6, (50, 255, 50), 3)
-        
         cv2.destroyWindow(window_name)
-        cv2.imshow('displayImage', displayImg)
-        cv2.waitKey(0)
+	finalDisplay = True
+	while finalDisplay:
+        	cv2.imshow('displayImage', displayImg)
+        	q = cv2.waitKey(1)
+		if q == ord('q'):
+			cv2.destroyAllWindows()
+			break
 
         
 # Old code, not updated yet like fish measure code
