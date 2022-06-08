@@ -8,6 +8,8 @@ from copilot_interface.cfg import opsControlParamsConfig
 
 import numpy as np
 import cv2
+import PIL
+from PIL import Image
 
 toggle_front_lasers = False
 toggle_bottom_lasers = False
@@ -69,13 +71,12 @@ def fishLengthCallback(msg,cb_args=0):
 		cv2.destroyWindow(window_name)
 		finalDisplay = True
 		while finalDisplay:
-			cv2.imshow('displayImage', displayImg)
-			q = cv2.waitKey(1)
-			if q == ord('q'):
-				cv2.destroyAllWindows()
-				break
+		    cv2.imshow('displayImage', displayImg)
+		    q = cv2.waitKey(1)
+		    if q == ord('q'):
+			cv2.destroyAllWindows()
+			break
         
-# code not added yet
 def shipwreckLengthCallback(msg, cb_args=0):
     if shipwreckLengthProgram:
         window_name = 'image'
@@ -129,9 +130,60 @@ def shipwreckLengthCallback(msg, cb_args=0):
 		while finalDisplay:
 		    cv2.imshow('displayImage', displayImg)
 		    q = cv2.waitKey(1)
-			if q == ord('q'):
-			    cv2.destroyAllWindows()
-		            break
+		    if q == ord('q'):
+			cv2.destroyAllWindows()
+		        break
+
+def photomosaicCallback(msg, cb_args=0):
+    if photomosaicProgram:
+	filePath = '/home/jhsrobo/Pictures/photomosaicImage'
+	tile = 1
+    	vid_capture = cv2.VideoCapture("192.168.1.111")
+    
+    	while (vid_capture.isOpened()):
+            ret, frame = vid_capture.read()
+	    cv2.imshow('image', frame)
+
+            k = cv2.waitKey(1)
+            if tile <= 8:
+            	if k == ord('p'):
+                    cv2.imwrite('/home/jhsrobo/Pictures/photomosaicImage{}.png'.format(tile), frame)
+                    tile = tile + 1
+        
+            if tile > 8:
+            	# Top layer
+            	top_list_im = ['{}1.png'.format(filePath), '{}2.png'.format(filePath), '{}3.png'.format(filePath), '{}4.png'.format(filePath)]
+            	top_imgs = [PIL.Image.open(i) for i in top_list_im]
+            	min_shape = sorted([(np.sum(i.size), i.size) for i in top_imgs])[0][1]
+            	top_img_layer = np.hstack((np.asarray(i.resize(min_shape)) for i in top_imgs))
+            	top_imgs_layer = PIL.Image.fromarray(top_img_layer)
+            	top_imgs_layer.save('/home/jhsrobo/Pictures/photomosaicTopLayer.png')
+
+            	# Bottom layer
+            	bottom_list_im = ['{}8.png'.format(filePath), '{}7.png'.format(filePath), '6.png'.format(filePath), '{}5.png'.format(filePath)]
+            	bottom_imgs = [PIL.Image.open(i) for i in bottom_list_im]
+            	min_shape = sorted( [(np.sum(i.size), i.size ) for i in bottom_imgs])[0][1]
+            	bottom_img_layer = np.hstack((np.asarray(i.resize(min_shape)) for i in bottom_imgs))
+            	bottom_imgs_layer = PIL.Image.fromarray(bottom_img_layer)
+            	bottom_imgs_layer.save('/home/jhsrobo/Pictures/photomosaicBottomLayer.png')
+
+            	# Combined top and bottom layer
+            	combine_list_im = ['/home/jhsrobo/Pictures/photomosaicTopLayer.png', '/home/jhsrobo/Pictures/photomosaicBottomLayer.png']
+            	combine_imgs = [PIL.Image.open(i) for i in combine_list_im]
+            	min_shape = sorted([(np.sum(i.size), i.size) for i in combine_imgs])[0][1]
+            	combine_img_layers = np.vstack((np.asarray(i.resize(min_shape)) for i in combine_imgs))
+            	combined_image = PIL.Image.fromarray(combine_img_layers)
+            	combined_image.save('/home/jhsrobo/Pictures/Photomosaic.png')
+
+            	# Display photomosaic
+            	photomosaic = cv2.imread("/home/jhsrobo/Pictures/Photomosaic.png", cv2.IMREAD_COLOR)
+            	displayImage = True
+		while displayImage:
+		    cv2.imshow('image', photomosaic)
+            	    q = cv2.waitKey(1)
+		    if q == ord('q'):
+            		cv2.destroyAllWindows()
+			break
 
 def enable_front_lasers(msg, cb_args=0):
     global gpio_pub, old_msg
@@ -148,7 +200,7 @@ def enable_bottom_lasers(msg, cb_args=0):
         old_msg_2 = msg.data
         
 def main():
-    global pubFishLength, pubShipwreckLength, pubFrontLasers, pubBottomLasers, pubPhotomosaic, pubShipwreck, subFishLength, subShipwreckLength, subFrontLasers, subBottomLasers, subPhotomosaic, subShipwreck, gpio_pub
+    global pubFishLength, pubShipwreckLength, pubFrontLasers, pubBottomLasers, pubPhotomosaic, pubShipwreck, subFishLength, subShipwreckLength, subFrontLasers, subBottomLasers, subPhotomosaic, subShipwreck, gpio_pub, subPhotomosaic
     rospy.init_node('ops_interface')
     
     # Subscribers
@@ -156,6 +208,7 @@ def main():
     subShipwreckLength = rospy.Subscriber('ops/shipwreck_toggle', Bool, shipwreckLengthCallback)
     subFrontLasers = rospy.Subscriber('ops/toggle_front_lasers', Bool, enable_front_lasers)
     subBottomLasers = rospy.Subscriber('ops/toggle_bottom_lasers', Bool, enable_bottom_lasers)
+    subPhotomosaic = rospy.Subscriber('ops/photomosaic_toggle', Bool, photomosaicCallback)
     
     # Publishers
     pubFrontLasers = rospy.Publisher('ops/toggle_front_lasers', Bool, queue_size=1)
