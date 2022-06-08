@@ -17,6 +17,7 @@ photomosaicProgram = False
 old_msg = False
 old_msg_2 = False
 
+
 def fishLengthCallback(msg,cb_args=0):
     if fishLengthProgram:
 	    window_name = 'image'
@@ -27,9 +28,8 @@ def fishLengthCallback(msg,cb_args=0):
 		    img = cv2.circle(img,(x,y),20,(0,255,0),-1)
 		    img = cv2.imread('/home/jhsrobo/Pictures/fishLength.png', cv2.IMREAD_COLOR)
 		    cv2.imshow(window_name, img)
-
 	    clicks = []
-	    vid_capture = cv2.VideoCapture('/home/jhsrobo/Videos/testingSample3.mp4')
+	    vid_capture = cv2.VideoCapture('192.168.1.98') # CHANGE DEPENDING ON IP OF CAMERAS
 
 	    count = 0
 
@@ -61,7 +61,7 @@ def fishLengthCallback(msg,cb_args=0):
 		    cv2.waitKey(1)
 		    if len(clicks) == 4:
 			reference = abs(clicks[0][0] - clicks[1][0])
-			ratio = 5 / reference
+			ratio = 5. / reference
 			total = ((((abs(clicks[2][0] - clicks[3][0]) ** 2) + (abs(clicks[2][1] - clicks[3][1])) ** 2)) ** 0.5) * ratio
 			status = False
 		displayImg = np.zeros((512,1024,3), dtype=np.uint8)
@@ -74,14 +74,64 @@ def fishLengthCallback(msg,cb_args=0):
 			if q == ord('q'):
 				cv2.destroyAllWindows()
 				break
-
         
 # code not added yet
-#def shipwreckLengthCallback(msg, cb_args=0):
-                # shipwreck math
-		#reference = abs(coords[0][0] - coords[1][0])
-                #ratio = 15 / reference
-                #total = ((((abs(coords[2][0] - coords[3][0]) ** 2) + (abs(coords[2][1] - coords[3][1])) ** 2)) ** 0.5) * ratio
+def shipwreckLengthCallback(msg, cb_args=0):
+    if shipwreckLengthProgram:
+        window_name = 'image'
+	    def draw_circle(event,x,y,flags,param,cb_args=0,img=cv2.imread('/home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)):
+		window_name = 'image'
+		if event == cv2.EVENT_LBUTTONDOWN:
+		    clicks.append((x, y))
+		    img = cv2.circle(img,(x,y),20,(0,255,0),-1)
+		    img = cv2.imread('/home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)
+		    cv2.imshow(window_name, img)
+	    clicks = []
+	    vid_capture = cv2.VideoCapture('192.168.1.111') # CHANGE DEPENDING ON IP OF CAMERAS
+
+	    count = 0
+
+	    while (vid_capture.isOpened()):
+		ret, frame = vid_capture.read()
+		cv2.imshow('video', frame)
+		k = cv2.waitKey(1)
+
+		if count < 1:
+		    if k == ord('p'):
+			cv2.imwrite('/home/jhsrobo/Pictures/shipwreckLength.png', frame)
+			count = count + 1
+			break
+
+	    if count >= 1:
+		cv2.destroyAllWindows()
+		img = cv2.imread('/home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)
+		window_open = False
+		while not window_open:
+		    try:
+			cv2.namedWindow(window_name)
+			cv2.setMouseCallback(window_name, draw_circle)
+			window_open = True
+		    except:
+			cv2.destroyAllWindows()
+		status = True
+		while status:
+		    cv2.imshow(window_name, img)
+		    cv2.waitKey(1)
+		    if len(clicks) == 4:
+			reference = abs(clicks[0][0] - clicks[1][0])
+			ratio = 15. / reference
+			total = ((((abs(clicks[2][0] - clicks[3][0]) ** 2) + (abs(clicks[2][1] - clicks[3][1])) ** 2)) ** 0.5) * ratio
+			status = False
+		displayImg = np.zeros((512,1024,3), dtype=np.uint8)
+		cv2.putText(displayImg, "{:.2f} cm".format(total), (50,325), cv2.FONT_HERSHEY_SIMPLEX, 6, (50, 255, 50), 3)
+		cv2.destroyWindow(window_name)
+		finalDisplay = True
+		while finalDisplay:
+		    cv2.imshow('displayImage', displayImg)
+		    q = cv2.waitKey(1)
+			if q == ord('q'):
+			    cv2.destroyAllWindows()
+		            break
 
 def enable_front_lasers(msg, cb_args=0):
     global gpio_pub, old_msg
