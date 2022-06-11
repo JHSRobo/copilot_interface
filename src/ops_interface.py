@@ -238,10 +238,9 @@ def main():
         return config
       
 
-      # setup dynamic reconfigure
-      server = Server(opsControlParamsConfig, opsCallback)
-    
-      rospy.spin()
+    # setup dynamic reconfigure
+    server = Server(opsControlParamsConfig, opsCallback)
+    rospy.spin()
         
 if __name__  == "__main__":
     main()
