@@ -187,14 +187,12 @@ def enable_front_lasers(msg, cb_args=0):
     global gpio_pub, old_msg
     if old_msg != msg.data:
         gpio_pub.publish(21)
-        gpio_pub.publish(20)
         old_msg = msg.data
 
 def enable_bottom_lasers(msg, cb_args=0):
     global gpio_pub, old_msg_2
     if old_msg_2 != msg.data:
-        gpio_pub.publish(26)
-        gpio_pub.publish(6)
+        gpio_pub.publish(20)
         old_msg_2 = msg.data
         
 def main():
