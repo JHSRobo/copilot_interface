@@ -80,13 +80,13 @@ def fishLengthCallback(msg,cb_args=0):
 def shipwreckLengthCallback(msg, cb_args=0):
     if shipwreckLengthProgram:
         window_name = 'image'
-	    def draw_circle(event,x,y,flags,param,cb_args=0,img=cv2.imread('/home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)):
-		window_name = 'image'
-		if event == cv2.EVENT_LBUTTONDOWN:
-		    clicks.append((x, y))
-		    img = cv2.circle(img,(x,y),20,(0,255,0),-1)
-		    img = cv2.imread('/home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)
-		    cv2.imshow(window_name, img)
+	def draw_circle(event,x,y,flags,param,cb_args=0,img=cv2.imread('/home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)):
+	    window_name = 'image'
+	    if event == cv2.EVENT_LBUTTONDOWN:
+		clicks.append((x, y))
+		img = cv2.circle(img,(x,y),20,(0,255,0),-1)
+		img = cv2.imread('/home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)
+		cv2.imshow(window_name, img)
 	    clicks = []
 	    vid_capture = cv2.VideoCapture('192.168.1.111') # CHANGE DEPENDING ON IP OF CAMERAS
 
