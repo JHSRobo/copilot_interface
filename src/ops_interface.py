@@ -13,15 +13,13 @@ from PIL import Image
 
 toggle_front_lasers = False
 toggle_bottom_lasers = False
-fishLengthProgram = False
-shipwreckLengthProgram = False
-photomosaicProgram = False
 old_msg = False
 old_msg_2 = False
 
 
 def fishLengthCallback(msg,cb_args=0):
-    if fishLengthProgram:
+    if msg.data:
+	print("Running fish")
 	    window_name = 'image'
 	    def draw_circle(event,x,y,flags,param,cb_args=0,img=cv2.imread('/home/jhsrobo/Pictures/fishLength.png', cv2.IMREAD_COLOR)):
 		window_name = 'image'
@@ -78,7 +76,7 @@ def fishLengthCallback(msg,cb_args=0):
 			break
         
 def shipwreckLengthCallback(msg, cb_args=0):
-    if shipwreckLengthProgram:
+    if msg.data:
         window_name = 'image'
 	def draw_circle(event,x,y,flags,param,cb_args=0,img=cv2.imread('/home/jhsrobo/Pictures/shipwreckLength.png', cv2.IMREAD_COLOR)):
 	    window_name = 'image'
@@ -135,7 +133,7 @@ def shipwreckLengthCallback(msg, cb_args=0):
 		        break
 
 def photomosaicCallback(msg, cb_args=0):
-    if photomosaicProgram:
+    if msg.data:
 	filePath = '/home/jhsrobo/Pictures/photomosaicImage'
 	tile = 1
     	vid_capture = cv2.VideoCapture("192.168.1.111")
@@ -225,18 +223,14 @@ def main():
       
       toggle_front_lasers = config.toggle_front_lasers
       toggle_bottom_lasers = config.toggle_bottom_lasers
-      fishLengthProgram = config.fish_length_finder
-      shipwreckLengthProgram = config.shipwreck_length_finder
-      photomosaicProgram = config.photomosaic
-      mapShipwreck = config.shipwreck_mapper
       
       
       pubFrontLasers.publish(toggle_front_lasers)
       pubBottomLasers.publish(toggle_bottom_lasers)
-      pubFishLength.publish(fishLengthProgram)
-      pubShipwreckLength.publish(shipwreckLengthProgram)
-      pubPhotomosaic.publish(photomosaicProgram)
-      pubShipwreck.publish(mapShipwreck)
+      pubFishLength.publish(config.fish_length_finder)
+      pubShipwreckLength.publish(config.shipwreck_length_finder)
+      pubPhotomosaic.publish(config.photomosaic)
+      pubShipwreck.publish(config.shipwreck_mapper)
       
       config.fish_length_finder = False
       config.shipwreck_length_finder = False
