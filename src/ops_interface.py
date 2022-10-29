@@ -200,21 +200,21 @@ def main():
     rospy.init_node('ops_interface')
     
     # Subscribers
-    subFishLength = rospy.Subscriber('ops/fish_toggle', Bool, fishLengthCallback)
-    subShipwreckLength = rospy.Subscriber('ops/shipwreck_toggle', Bool, shipwreckLengthCallback)
-    subFrontLasers = rospy.Subscriber('ops/toggle_front_lasers', Bool, enable_front_lasers)
-    subBottomLasers = rospy.Subscriber('ops/toggle_bottom_lasers', Bool, enable_bottom_lasers)
-    subPhotomosaic = rospy.Subscriber('ops/photomosaic_toggle', Bool, photomosaicCallback)
+    #subFishLength = rospy.Subscriber('ops/fish_toggle', Bool, fishLengthCallback)
+    #subShipwreckLength = rospy.Subscriber('ops/shipwreck_toggle', Bool, shipwreckLengthCallback)
+    #subFrontLasers = rospy.Subscriber('ops/toggle_front_lasers', Bool, enable_front_lasers)
+    #subBottomLasers = rospy.Subscriber('ops/toggle_bottom_lasers', Bool, enable_bottom_lasers)
+    #subPhotomosaic = rospy.Subscriber('ops/photomosaic_toggle', Bool, photomosaicCallback)
     
     # Publishers
-    pubFrontLasers = rospy.Publisher('ops/toggle_front_lasers', Bool, queue_size=1)
-    pubBottomLasers = rospy.Publisher('ops/toggle_bottom_lasers', Bool, queue_size=1)
-    pubFishLength = rospy.Publisher('ops/fish_toggle', Bool, queue_size=1)
-    pubShipwreckLength = rospy.Publisher('ops/shipwreck_toggle', Bool, queue_size=1)
-    pubPhotomosaic = rospy.Publisher('ops/photomosaic_toggle', Bool, queue_size=1)
-    pubShipwreck = rospy.Publisher('ops/shipwreck_mapper', Bool, queue_size=1)
+    #pubFrontLasers = rospy.Publisher('ops/toggle_front_lasers', Bool, queue_size=1)
+    #pubBottomLasers = rospy.Publisher('ops/toggle_bottom_lasers', Bool, queue_size=1)
+    #pubFishLength = rospy.Publisher('ops/fish_toggle', Bool, queue_size=1)
+    #pubShipwreckLength = rospy.Publisher('ops/shipwreck_toggle', Bool, queue_size=1)
+    #pubPhotomosaic = rospy.Publisher('ops/photomosaic_toggle', Bool, queue_size=1)
+    #pubShipwreck = rospy.Publisher('ops/shipwreck_mapper', Bool, queue_size=1)
     
-    gpio_pub = rospy.Publisher('rov/gpio_control', Int32, queue_size=1)
+    #gpio_pub = rospy.Publisher('rov/gpio_control', Int32, queue_size=1)
     
     def opsCallback(config, level):
         global fishLengthProgram, shipwreckLengthProgram, toggle_front_lasers, toggle_bottom_lasers, photomosaicProgram, mapShipwreck
@@ -223,12 +223,12 @@ def main():
         toggle_bottom_lasers = config.toggle_bottom_lasers
       
       
-        pubFrontLasers.publish(toggle_front_lasers)
-        pubBottomLasers.publish(toggle_bottom_lasers)
-        pubFishLength.publish(config.fish_length_finder)
-        pubShipwreckLength.publish(config.shipwreck_length_finder)
-        pubPhotomosaic.publish(config.photomosaic)
-        pubShipwreck.publish(config.shipwreck_mapper)
+        #pubFrontLasers.publish(toggle_front_lasers)
+        #pubBottomLasers.publish(toggle_bottom_lasers)
+        #pubFishLength.publish(config.fish_length_finder)
+        #pubShipwreckLength.publish(config.shipwreck_length_finder)
+        #pubPhotomosaic.publish(config.photomosaic)
+        #pubShipwreck.publish(config.shipwreck_mapper)
       
         config.fish_length_finder = False
         config.shipwreck_length_finder = False
