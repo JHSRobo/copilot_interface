@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  sensor_msgs
   message_generation
 )
 
@@ -51,7 +52,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   PIDmsg.msg
+   controlData.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -72,6 +73,7 @@ find_package(catkin REQUIRED COMPONENTS
  generate_messages(
    DEPENDENCIES
    std_msgs
+   sensor_msgs
  )
 
 ################################################
@@ -91,7 +93,6 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
  generate_dynamic_reconfigure_options(
    cfg/copilotControlParams.cfg
-   cfg/opsControlParams.cfg
  )
 
 ###################################
@@ -198,7 +199,3 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-
-add_executable(copilot_interface src/copilot_interface.cpp)
-target_link_libraries(copilot_interface ${catkin_LIBRARIES})
-add_dependencies(copilot_interface ${PROJECT_NAME}_gencfg)
