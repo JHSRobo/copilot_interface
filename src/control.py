@@ -35,7 +35,7 @@ def controlCallback(config, level):
 
 if __name__  == "__main__":
   rospy.init_node('GUI')
-  joy_sub = rospy.Subscriber('joy/joy1', Joy, cameraCallback) # Subscriber to joystick 1
+  joy_sub = rospy.Subscriber('joystick', Joy, cameraCallback) # Subscriber to joystick 1
   control_pub = rospy.Publisher('control', controlData, queue_size=1) # Publisher to control
   server = Server(copilotControlParamsConfig, controlCallback)
   rospy.spin()
