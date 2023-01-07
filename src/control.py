@@ -24,6 +24,7 @@ def controlCallback(config, level):
   #Toggle Thrusters and Depth Hold
   control.thruster_status = config.thrusterToggle
   control.dh_status = config.depthHoldToggle
+  control.target_depth = config.targetDepth
 
   #Update control message with sensitivity
   control.linear_sense = config.linearSense
