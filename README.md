@@ -36,10 +36,12 @@ Test only so no launch file is provided. Do a simple rosrun in order to run the 
 
 ## Contributors 
 
-* Current maintaner: Michael Equi
+* Current maintaner: James Randall
 
-* Contirbutors:
+* Contributors:
   * Michael Equi - initial work
+  * Alex Bertran - ops interface (EOL)
+  * James Randall - control.py rewrite
 
 ## Helpful Resources
 
