@@ -7,17 +7,23 @@ from copilot_interface.cfg import copilotControlParamsConfig
 from copilot_interface.msg import controlData
 
 control = controlData()
+current_cam = 0
 
 def cameraCallback(joy):
+  cam_select = 0
   if joy.buttons[2]:
-    control.camera = 1
+    cam_select = 1
   elif joy.buttons[3]:
-    control.camera = 2
+    cam_select = 2
   elif joy.buttons[4]:
-    control.camera = 3
+    cam_select = 3
   elif joy.buttons[5]:
-    control.camera = 4
-  control_pub.publish(control)
+    cam_select = 4
+  if cam_select == current_cam:
+    pass
+  else:
+    control.camera = cam_select
+    control_pub.publish(control)
   
 
 def controlCallback(config, level):
