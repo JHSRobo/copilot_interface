@@ -1,6 +1,4 @@
 bool thruster_status
-bool dh_status
-float32 target_depth
 float32 linear_sense
 float32 angular_sense
 float32 vertical_sense
