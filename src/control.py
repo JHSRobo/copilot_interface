@@ -27,17 +27,22 @@ def cameraCallback(joy):
   
 
 def controlCallback(config, level):
-  #Toggle Thrusters and Depth Hold
+  #Toggle Thrusters
   control.thruster_status = config.thrusterToggle
-  control.dh_status = config.depthHoldToggle
-  control.target_depth = config.targetDepth
 
   #Update control message with sensitivity
   control.linear_sense = config.linearSense
   control.angular_sense = config.angularSense
   control.vertical_sense = config.verticalSense
-  control_pub.publish(control)
 
+  # Update GPIO status
+  control.gpio_pin_3 = config.pin3
+  control.gpio_pin_5 = config.pin5
+  control.gpio_pin_7 = config.pin7
+  control.gpio_pin_11 = config.pin11
+  control.gpio_pin_13 = config.pin13
+
+  control_pub.publish(control)
   return config
 
 if __name__  == "__main__":
