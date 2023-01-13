@@ -39,10 +39,10 @@ Test only so no launch file is provided. Do a simple rosrun in order to run the 
 * Current maintaners: James Randall and Alex Bertran
 
 * Contributors:
-  * Michael Equi - initial work
-  * Alex Bertran - ops interface (EOL 2022)
-  * James Randall - control.py rewrite
-  * Alex Bertran - depth hold interface
+  * Michael Equi '19 - initial work
+  * Alex Bertran '24 - ops interface (EOL 2022)
+  * James Randall '24 - control.py rewrite
+  * Alex Bertran '24 - depth hold interface
 
 ## Helpful Resources
 
