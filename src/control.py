@@ -36,11 +36,11 @@ def controlCallback(config, level):
   control.vertical_sense = config.verticalSense
 
   # Update GPIO status
-  control.gpio_pin_3 = config.pin3
-  control.gpio_pin_5 = config.pin5
   control.gpio_pin_7 = config.pin7
   control.gpio_pin_11 = config.pin11
   control.gpio_pin_13 = config.pin13
+  control.gpio_pin_15 = config.pin15
+  control.gpio_pin_19 = config.pin19
 
   control_pub.publish(control)
   return config
