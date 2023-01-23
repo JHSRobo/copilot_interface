@@ -16,6 +16,11 @@ def autoControlCallback(config, level):
   autoControl.p_scalar = config.pScalar
   autoControl.i_scalar = config.iScalar
   autoControl.d_scalar = config.dScalar
+  
+  #Auto Docking Enable/Disable
+  autoControl.auto_dock = config.autoDock
+  
+  #Publish
   auto_control_pub.publish(autoControl)
 
   return config
