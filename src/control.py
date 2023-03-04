@@ -49,6 +49,9 @@ def controlCallback(config, level):
   control.gpio_pin_15 = config.pin15
   control.gpio_pin_19 = config.pin19
 
+  # Update coral status
+  control.coral = config.coral_status
+
   control_pub.publish(control)
   return config
 
