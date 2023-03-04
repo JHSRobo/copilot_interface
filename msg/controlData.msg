@@ -9,3 +9,4 @@ bool gpio_pin_13
 bool gpio_pin_15
 bool gpio_pin_19
 bool screenshot
+bool coral
