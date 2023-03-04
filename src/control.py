@@ -9,22 +9,29 @@ from copilot_interface.msg import controlData
 control = controlData()
 current_cam = 0
 
-def cameraCallback(joy):
+def joyCallback(joy):
   cam_select = 0
+  change = False
+  if joy.axes[4] != 0 or joy.axes[5] != 0:
+    control.screenshot = True
+    change = True
+
   if joy.buttons[2]:
     cam_select = 1
+    change = True
   elif joy.buttons[3]:
     cam_select = 2
+    change = True
   elif joy.buttons[4]:
     cam_select = 3
+    change = True
   elif joy.buttons[5]:
     cam_select = 4
-  if cam_select == current_cam:
-    pass
-  else:
+    change = True
+  if change:
     control.camera = cam_select
     control_pub.publish(control)
-  
+    control.screenshot = False
 
 def controlCallback(config, level):
   #Toggle Thrusters
@@ -47,7 +54,7 @@ def controlCallback(config, level):
 
 if __name__  == "__main__":
   rospy.init_node('GUI')
-  joy_sub = rospy.Subscriber('joystick', Joy, cameraCallback) # Subscriber to joystick 1
+  joy_sub = rospy.Subscriber('joystick', Joy, joyCallback) # Subscriber to joystick 1
   control_pub = rospy.Publisher('control', controlData, queue_size=1) # Publisher to control
   server = Server(copilotControlParamsConfig, controlCallback)
   rospy.spin()
