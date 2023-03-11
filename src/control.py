@@ -43,11 +43,12 @@ def controlCallback(config, level):
   control.vertical_sense = config.verticalSense
 
   # Update GPIO status
-  control.gpio_pin_7 = config.pin7
-  control.gpio_pin_11 = config.pin11
-  control.gpio_pin_13 = config.pin13
-  control.gpio_pin_15 = config.pin15
+  control.gpio_pin_23 = config.pin23
+  control.gpio_pin_24 = config.pin24
+  control.gpio_pin_25 = config.pin25
+  control.gpio_pin_5 = config.pin5
   control.gpio_pin_19 = config.pin19
+  control.gpio_pin_16 = config.pin16
 
   # Update coral status
   control.coral = config.coralPhotos
