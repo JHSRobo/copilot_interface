@@ -36,7 +36,7 @@ Test only so no launch file is provided. Do a simple rosrun in order to run the 
 
 ## Contributors 
 
-* Current maintainers: James Randall and Alex Bertran
+* Current maintainers: James Randall and Alex Bertran, Nathan Peterson
 
 * Contributors:
   * Michael Equi '19 - initial work
