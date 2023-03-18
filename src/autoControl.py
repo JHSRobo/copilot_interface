@@ -3,7 +3,7 @@ import rospy
 from std_msgs.msg import UInt8
 from dynamic_reconfigure.server import Server
 from copilot_interface.cfg import depthControlParamsConfig
-from launch_files.msg import autoControlData
+from copilot_interface.msg import autoControlData
 
 autoControl = autoControlData()
 
