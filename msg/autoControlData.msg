@@ -4,6 +4,6 @@ float32 p_scalar
 float32 i_scalar
 float32 d_scalar
 bool auto_dock
-int AD_x_error
-int AD_y_error
-int AD_proximity
+int ad_x_error
+int ad_y_error
+int ad_proximity
